@@ -16,7 +16,7 @@
 
 AccFG is a tool for precise functional group (FG) extraction and molecular structure comparison.
 
-![TOC](./results/TOC.png)
+<img src="./results/TOC.png" width="400">
 
 ## Installation
 
@@ -126,8 +126,7 @@ molimg(draw_mol_with_fgs(cephalosporin_C, afg=my_afg, img_size=(900,900)))
 
 This will show image with FGs highlighted
 
-![FGs highlighted in cephalosporin C](./results/cephalosporin_C.png)
-
+<img src="./results/cephalosporin_C.png" width="400">
 
 ### Molecular structure comparison
 ```python
@@ -158,8 +157,8 @@ with open('results/compare_mols.png', 'wb') as f:
     img.save(f, format='PNG')
 img
 ```
-![compare_mols](./results/compare_mols.png)
 
+<img src='./results/compare_mols.png' width="600">
 
 ## Run
 
