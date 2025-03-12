@@ -168,6 +168,6 @@ To run the BBBP dataset, Lipophilicity dataset, BACE dataset, and CHEMBL drugs, 
 python run_data.py
 ```
 
-The result is in `./molecule_data`. The code to process the data is in `exam_data.ipynb`
+The result is in `./molecule_data`. The code to process the data is in `exam_data.py`
 
 All other examples in the manuscript is in `example.ipynb`.
