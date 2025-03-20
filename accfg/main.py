@@ -22,12 +22,6 @@ from collections import defaultdict
 
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
-def canonical_smiles(smi):
-    return Chem.MolToSmiles(Chem.MolFromSmiles(smi))
-###############################################################################
-################################ AccFG ########################################
-
 class AccFG():
     def __init__(self, common_fgs=True, heterocycle_fgs=True, user_defined_fgs={}, print_load_info=False):
         log_text = ""
@@ -62,14 +56,6 @@ class AccFG():
         if_mapped = len(mapped_atoms) > 0
         return if_mapped, mapped_atoms
     
-    def _freq_fg_in_mol(self, mol, fg):
-        fgmol = Chem.MolFromSmarts(fg)
-        mol = Chem.MolFromSmiles(mol.strip())
-        freq = len(Chem.Mol.GetSubstructMatches(mol, fgmol, uniquify=True))
-        if freq > 0:
-            return freq
-        else:
-            return False
     def _get_bonds_from_match(self, query_mol, mol, atom_match):
         """
         Args:
@@ -184,8 +170,9 @@ class AccFG():
         return data
     
 
-###################################################################################
-################################ Comparison #######################################
+# Comparison
+def canonical_smiles(smi):
+    return Chem.MolToSmiles(Chem.MolFromSmiles(smi))
 
 def get_RascalMCES(smiles1, smiles2, similarityThreshold=0.7):
     if isinstance(smiles1, str) and isinstance(smiles2, str):

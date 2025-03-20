@@ -32,9 +32,13 @@ To install AccFG, follow these steps:
     ```
 3. Install the required dependencies:
     ```bash
-    conda create --name accfg
+    conda create --name accfg python=3.10
     conda activate accfg
     pip install -r requirements.txt
+    ```
+4. Quick start:
+    ```bash
+    python run_accfg.py 'CN(C)/N=N/C1=C(NC=N1)C(=O)N'
     ```
 
 The FG dictionary is stored in `./accfg/fgs_common.csv` and `./accfg/fgs_heterocycle.csv`
