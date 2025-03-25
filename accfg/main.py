@@ -22,14 +22,23 @@ from collections import defaultdict
 
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+def canonical_smiles(smi):
+    return Chem.MolToSmiles(Chem.MolFromSmiles(smi))
+
 class AccFG():
-    def __init__(self, common_fgs=True, heterocycle_fgs=True, user_defined_fgs={}, print_load_info=False):
+    def __init__(self, common_fgs=True, heterocycle_fgs=True, user_defined_fgs={}, print_load_info=False, lite=False):
+        self.lite = lite
         log_text = ""
-        if common_fgs:
+        if common_fgs and not lite:
             self.dict_fgs_common_path = os.path.join(PROJECT_DIR, 'accfg/fgs_common.csv')
             
             self.dict_fgs_common = self.csv_to_dict(self.dict_fgs_common_path)
             log_text += f"Loaded {len(self.dict_fgs_common)} common functional groups. "
+        elif common_fgs and lite:
+            self.dict_fgs_common_path = os.path.join(PROJECT_DIR, 'accfg/fgs_common.csv')
+            
+            self.dict_fgs_common = self.csv_to_dict(self.dict_fgs_common_path, lite=self.lite)
+            log_text += f"Loaded {len(self.dict_fgs_common)} common functional groups (lite). "
         else:
             self.dict_fgs_common = {}
         if heterocycle_fgs:
@@ -56,6 +65,14 @@ class AccFG():
         if_mapped = len(mapped_atoms) > 0
         return if_mapped, mapped_atoms
     
+    def _freq_fg_in_mol(self, mol, fg):
+        fgmol = Chem.MolFromSmarts(fg)
+        mol = Chem.MolFromSmiles(mol.strip())
+        freq = len(Chem.Mol.GetSubstructMatches(mol, fgmol, uniquify=True))
+        if freq > 0:
+            return freq
+        else:
+            return False
     def _get_bonds_from_match(self, query_mol, mol, atom_match):
         """
         Args:
@@ -159,262 +176,17 @@ class AccFG():
         except:
             return None
             # return "Wrong argument. Please input a valid molecular SMILES."
-    def csv_to_dict(self, csv_file):
+    def csv_to_dict(self, csv_file, lite=False):
         data = {}
         with open(csv_file, 'r') as file:
-            #df = pd.read_csv(file, quotechar='"', comment='#')
-            reader = csv.DictReader(filter(lambda row: row[0]!='#', file))
+            if not lite:
+                reader = csv.DictReader(filter(lambda row: not row.lstrip().startswith('%'), file))
+            else:
+                reader = csv.DictReader(filter(lambda row: not row.lstrip().startswith(('#','%')), file))
             for row in reader:
                 key = row.pop('Functional Group')
+                if not lite and key.lstrip().startswith('#'):
+                    key = key.replace('#','').lstrip()
                 data[key] = row.pop('SMARTS Pattern')
         return data
     
-
-# Comparison
-def canonical_smiles(smi):
-    return Chem.MolToSmiles(Chem.MolFromSmiles(smi))
-
-def get_RascalMCES(smiles1, smiles2, similarityThreshold=0.7):
-    if isinstance(smiles1, str) and isinstance(smiles2, str):
-        mol1 = Chem.MolFromSmiles(smiles1)
-        mol2 = Chem.MolFromSmiles(smiles2)
-    else:
-        mol1 = smiles1
-        mol2 = smiles2
-    opts = rdRascalMCES.RascalOptions()
-    opts.ringMatchesRingOnly = False#True
-    # opts.completeRingsOnly = True
-    opts.ignoreAtomAromaticity = True#True #
-    if similarityThreshold:
-        opts.similarityThreshold = similarityThreshold
-        
-    res = rdRascalMCES.FindMCES(mol1, mol2,opts)
-    return res
-
-
-def remove_atoms_from_mol(mol, atom_set):
-    ed_mol = Chem.RWMol(mol)
-    ed_mol.BeginBatchEdit()
-    for atom in atom_set:
-        ed_mol.RemoveAtom(atom)
-    ed_mol.CommitBatchEdit()
-    return ed_mol.GetMol()
-
-
-def get_unique_fgs_with_all_atoms(target_fgs, ref_fgs):
-    if isinstance(target_fgs, str):
-        target_fgs = eval(target_fgs)
-    if isinstance(ref_fgs, str):
-        ref_fgs = eval(ref_fgs)
-    unique_target_fgs = []
-    for fg in target_fgs:
-        if fg not in ref_fgs:
-            unique_target_fgs.append((fg,len(target_fgs[fg]),target_fgs[fg]))
-        elif fg in ref_fgs and len(target_fgs[fg]) > len(ref_fgs[fg]):
-            unique_target_fgs.append((fg,len(target_fgs[fg])-len(ref_fgs[fg]),target_fgs[fg]))
-    unique_ref_fgs = []
-    for fg in ref_fgs:
-        if fg not in target_fgs:
-            unique_ref_fgs.append((fg,len(ref_fgs[fg]),ref_fgs[fg]))
-        elif len(ref_fgs[fg]) > len(target_fgs[fg]):
-            unique_ref_fgs.append((fg,len(ref_fgs[fg])-len(target_fgs[fg]),ref_fgs[fg]))
-    return unique_target_fgs, unique_ref_fgs
-
-def process_unique_fgs_atoms(unique_fgs, mapped_atoms):
-    '''
-    Only keep the atoms that are not in the mapped atoms
-    '''
-    unique_fgs_atoms = []
-    for fg_name, number, atom_list in unique_fgs:
-        unique_atom_list = []
-        if number == len(atom_list):
-            unique_fgs_atoms.append((fg_name, number, atom_list))
-            continue
-        for atom_set in atom_list:
-            if set(atom_set).issubset(set(mapped_atoms)):
-                continue
-            unique_atom_list.append(atom_set)
-
-        assert len(unique_atom_list) == number
-        unique_fgs_atoms.append((fg_name, number, unique_atom_list))
-    return unique_fgs_atoms
-
-def flatten_fg_diff_atoms(fg_diff_atoms):
-    return [atom for fgs in fg_diff_atoms for atoms in fgs for atom in atoms]
-
-def get_alkane_and_atom_from_remain_mol(remain_mol_alkane):
-    alkane_frags = Chem.GetMolFrags(remain_mol_alkane)
-    alkane_list = []
-    for alkane_frag in alkane_frags:
-        atom_list = []
-        atom_idx_list = []
-        for atom_index in alkane_frag:
-            atom = remain_mol_alkane.GetAtomWithIdx(atom_index)
-            atom_list.append(atom.GetSymbol())
-            atom_idx_list.append(int(atom.GetProp('atomNote')))
-        atom_count = Counter(atom_list)
-        if 'C' in atom_count and len(atom_count)==1:
-            number = atom_count['C']
-            alkane_list.append((f'C{number} alkane',atom_idx_list))
-        elif len(atom_count)==0:
-            return []
-        else:
-            raise ValueError(f'Error on {Chem.MolToSmiles(remain_mol_alkane)}')         
-    alkane_list_dict = dict()
-    for alkane, atom_num_list in alkane_list:
-        alkane_list_dict.setdefault(alkane, []).append(atom_num_list)
-    alkane_list_with_len = [(alkane, len(atom_list), atom_list) for alkane, atom_list in alkane_list_dict.items()]
-    return alkane_list_with_len 
-def set_atom_idx(smi, label = 'molAtomMapNumber'):
-    #https://chemicbook.com/2021/03/01/how-to-show-atom-numbers-in-rdkit-molecule.html
-    if isinstance(smi, str):
-        mol  = Chem.MolFromSmiles(smi)
-    else:
-        mol = smi
-    for atom in mol.GetAtoms():
-        atom.SetProp(label,str(atom.GetIdx()))
-    return mol
-
-def merge_alkane_synonyms(fg_list):
-    merged_dict = defaultdict(list)
-    for fg_name, count, atom_list in fg_list:
-        merged_dict[fg_name].extend(atom_list)
-    merged_list = [(fg_name, len(atom_list), atom_list) for fg_name, atom_list in merged_dict.items()]
-    return merged_list
-
-def get_alkane_diff_split(target_remain_mol_frags, ref_remain_mol_frags):
-    '''
-    Split the remaining molecules into smaller fragments and compare them with the reference remaining molecules.
-    '''
-    target_remain_alkane = []
-    ref_remain_alkane = []
-     
-    for i in range(len(target_remain_mol_frags)):
-        target_remain_mol_frag = target_remain_mol_frags[i]
-        ref_remain_mol_frag = ref_remain_mol_frags[i]
-        res = rdFMCS.FindMCS([target_remain_mol_frag, ref_remain_mol_frag])
-        mcs_smarts = res.smartsString
-        mcs_mol = Chem.MolFromSmarts(res.smartsString)
-        
-        target_remain_mol_frag_match_atoms = target_remain_mol_frag.GetSubstructMatch(mcs_mol)
-        ref_remain_mol_frag_match_atoms = ref_remain_mol_frag.GetSubstructMatch(mcs_mol)
-        
-        target_remain_mol_frag_match_atoms = remove_atoms_from_mol(target_remain_mol_frag, set(target_remain_mol_frag_match_atoms))
-        ref_remain_mol_frag_match_atoms = remove_atoms_from_mol(ref_remain_mol_frag, set(ref_remain_mol_frag_match_atoms))
-        target_remain_frag_alkane = get_alkane_and_atom_from_remain_mol(target_remain_mol_frag_match_atoms)
-        ref_remain_frag_alkane = get_alkane_and_atom_from_remain_mol(ref_remain_mol_frag_match_atoms)
-        if target_remain_frag_alkane != []:
-            target_remain_alkane.extend(target_remain_frag_alkane)
-        if ref_remain_frag_alkane != []:
-            
-            ref_remain_alkane.extend(ref_remain_frag_alkane)
-            
-    for i in range(len(target_remain_mol_frags), len(ref_remain_mol_frags)):
-        ref_remain_mol_frag = ref_remain_mol_frags[i]
-        ref_remain_frag_alkane = get_alkane_and_atom_from_remain_mol(ref_remain_mol_frag)
-        if ref_remain_frag_alkane != []:
-            ref_remain_alkane.extend(ref_remain_frag_alkane)
-    return merge_alkane_synonyms(target_remain_alkane), merge_alkane_synonyms(ref_remain_alkane)
-
-def get_alkane_diff(target_smiles, unique_target_fgs_atoms, ref_smiles, unique_ref_fgs_atoms):
-    target_fg_diff_atoms = [unique_atom_list for _,_,unique_atom_list in unique_target_fgs_atoms]
-    ref_fg_diff_atoms = [unique_atom_list for _,_,unique_atom_list in unique_ref_fgs_atoms]
-
-    target_fg_diff_atoms = flatten_fg_diff_atoms(target_fg_diff_atoms)
-    ref_fg_diff_atoms = flatten_fg_diff_atoms(ref_fg_diff_atoms)
-    
-    target_mol = Chem.MolFromSmiles(target_smiles)
-    ref_mol = Chem.MolFromSmiles(ref_smiles)
-    target_mol = set_atom_idx(target_mol,'atomNote')
-    ref_mol = set_atom_idx(ref_mol,'atomNote')
-    
-    target_remain_mol = remove_atoms_from_mol(target_mol, set(target_fg_diff_atoms))
-    ref_remain_mol = remove_atoms_from_mol(ref_mol, set(ref_fg_diff_atoms))
-    Chem.SanitizeMol(target_remain_mol)
-    Chem.SanitizeMol(ref_remain_mol)
-    
-    mces_result_on_remain = get_RascalMCES(target_remain_mol, ref_remain_mol, similarityThreshold=0.01)
-    if len(mces_result_on_remain) != 0:
-        target_mapped_atoms = [atom_pair[0] for atom_pair in mces_result_on_remain[0].atomMatches()]
-        ref_mapped_atoms = [atom_pair[1] for atom_pair in mces_result_on_remain[0].atomMatches()]
-        target_remain_mol_alkane = remove_atoms_from_mol(target_remain_mol, set(target_mapped_atoms))
-        ref_remain_mol_alkane = remove_atoms_from_mol(ref_remain_mol, set(ref_mapped_atoms))
-        
-        target_remain_alkane = get_alkane_and_atom_from_remain_mol(target_remain_mol_alkane)
-        ref_remain_alkane = get_alkane_and_atom_from_remain_mol(ref_remain_mol_alkane)
-        return target_remain_alkane, ref_remain_alkane
-    else: # If the MCES result is empty, try to split the remaining molecules into smaller fragments
-        target_remain_mol_frags = Chem.GetMolFrags(target_remain_mol, asMols=True)
-        ref_remain_mol_frags = Chem.GetMolFrags(ref_remain_mol, asMols=True)
-        
-        target_remain_alkane = []
-        ref_remain_alkane = []
-        
-        if len(target_remain_mol_frags) <= len(ref_remain_mol_frags):
-            target_remain_alkane,ref_remain_alkane = get_alkane_diff_split(target_remain_mol_frags, ref_remain_mol_frags)
-            return target_remain_alkane, ref_remain_alkane
-        else:
-            ref_remain_alkane, target_remain_alkane = get_alkane_diff_split(ref_remain_mol_frags, target_remain_mol_frags)
-            return target_remain_alkane, ref_remain_alkane
-        
-    
-def get_alkane_diff_loose(target_smiles, unique_target_fgs_atoms, ref_smiles, unique_ref_fgs_atoms, target_mapped_atoms, ref_mapped_atoms):
-    '''
-    Use this method when the MCES result is empty. This method is not as accurate as the get_alkane_diff method.
-    '''
-    target_fg_diff_atoms = [unique_atom_list for _,_,unique_atom_list in unique_target_fgs_atoms]
-    ref_fg_diff_atoms = [unique_atom_list for _,_,unique_atom_list in unique_ref_fgs_atoms]
-
-    target_fg_diff_atoms = flatten_fg_diff_atoms(target_fg_diff_atoms)
-    ref_fg_diff_atoms = flatten_fg_diff_atoms(ref_fg_diff_atoms)
-    
-    target_mol = Chem.MolFromSmiles(target_smiles)
-    ref_mol = Chem.MolFromSmiles(ref_smiles)
-    target_mol = set_atom_idx(target_mol,'atomNote')
-    ref_mol = set_atom_idx(ref_mol,'atomNote')
-    
-    target_atom_to_remove = set(target_fg_diff_atoms) | set(target_mapped_atoms)
-    ref_atom_to_remove = set(ref_fg_diff_atoms) | set(ref_mapped_atoms)
-    
-    target_remain_mol = remove_atoms_from_mol(target_mol, set(target_atom_to_remove))
-    ref_remain_mol = remove_atoms_from_mol(ref_mol, set(ref_atom_to_remove))
-    Chem.SanitizeMol(target_remain_mol)
-    Chem.SanitizeMol(ref_remain_mol)
-    
-    target_remain_alkane = get_alkane_and_atom_from_remain_mol(target_remain_mol)
-    ref_remain_alkane = get_alkane_and_atom_from_remain_mol(ref_remain_mol)
-    return target_remain_alkane, ref_remain_alkane
-
-
-def compare_mols(target_smiles, ref_smiles, afg = AccFG(), similarityThreshold=0.7, canonical=True):
-    if canonical:
-        target_smiles = canonical_smiles(target_smiles)
-        ref_smiles = canonical_smiles(ref_smiles)
-    
-    mces_result = get_RascalMCES(target_smiles, ref_smiles, similarityThreshold)
-    if len(mces_result) == 0:
-        warnings.warn(f'target_smiles: {target_smiles} and ref_smiles: {ref_smiles} has low similarity. MCES result is empty. Try to lower the similarityThreshold.')
-        target_mapped_atoms = []
-        ref_mapped_atoms = []
-    else:
-        target_mapped_atoms = [atom_pair[0] for atom_pair in mces_result[0].atomMatches()]
-        ref_mapped_atoms = [atom_pair[1] for atom_pair in mces_result[0].atomMatches()]
-
-    target_fg = afg.run(target_smiles)
-    ref_fg = afg.run(ref_smiles)
-    
-    unique_target_fgs, unique_ref_fgs = get_unique_fgs_with_all_atoms(target_fg, ref_fg)
-    
-    unique_target_fgs_atoms = process_unique_fgs_atoms(unique_target_fgs, target_mapped_atoms)
-    unique_ref_fgs_atoms = process_unique_fgs_atoms(unique_ref_fgs, ref_mapped_atoms)
-    try:
-        target_remain_alkane, ref_remain_alkane = get_alkane_diff(target_smiles, unique_target_fgs_atoms, ref_smiles, unique_ref_fgs_atoms)
-    except:
-        try:
-            target_remain_alkane, ref_remain_alkane = get_alkane_diff_loose(target_smiles, unique_target_fgs_atoms, ref_smiles, unique_ref_fgs_atoms, target_mapped_atoms, ref_mapped_atoms)
-            warnings.warn("Using loose method to get the remaining alkanes.")
-        except:
-            warnings.warn("Cannot get the remaining alkanes.")
-            return (unique_target_fgs_atoms, []), (unique_ref_fgs_atoms, [])
-    return (unique_target_fgs_atoms, target_remain_alkane), (unique_ref_fgs_atoms, ref_remain_alkane)
-

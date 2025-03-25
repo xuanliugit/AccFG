@@ -1,6 +1,9 @@
-from .main import AccFG, compare_mols, get_RascalMCES
+from .main import AccFG
+from .compare import compare_mols, get_RascalMCES
 from rdkit import Chem
+from rdkit.Chem import AllChem as Chem
 from rdkit.Chem import Draw
+from rdkit.Chem import rdFMCS
 from rdkit.Chem.Draw import rdMolDraw2D
 import matplotlib as mpl
 import networkx as nx
@@ -71,11 +74,12 @@ def draw_mol_with_fgs_dict(smi, fgs_dict, with_legend = True, with_atom_idx = Tr
     d2d.FinishDrawing()
     return d2d.GetDrawingText()
 
-def draw_mol_with_fgs(smi, afg = AccFG(), with_legend = True, with_atom_idx = True, alpha = 1, cmp = mpl.colormaps['Pastel1'], img_size = (500, 400)):
+def draw_mol_with_fgs(smi, afg = AccFG(), canonical=True, with_legend = True, with_atom_idx = True, alpha = 1, cmp = mpl.colormaps['Pastel1'], img_size = (500, 400)):
     
-    smi = Chem.MolToSmiles(Chem.MolFromSmiles(smi))
+    if canonical:
+        smi = Chem.MolToSmiles(Chem.MolFromSmiles(smi))
     
-    fgs = afg.run(smi)
+    fgs = afg.run(smi, canonical=canonical)
     
     mol = Chem.MolFromSmiles(smi)
 
@@ -238,3 +242,53 @@ def print_fg_tree(graph, roots, show_atom_idx=False):
         if not nx.has_path(graph, u, v):
             graph.add_edge(u, v)
     print_directed_graph_as_tree(graph, roots, header='',last=False, show_atom_idx=show_atom_idx)
+    
+    
+def SmilesMCStoGridImage(smiles: list[str] or dict[str, str], align_substructure: bool = True, verbose: bool = False, **kwargs):
+     # https://bertiewooster.github.io/2022/10/09/RDKit-find-and-highlight-the-maximum-common-substructure-between-molecules.html
+     """
+     Convert a list (or dictionary) of SMILES strings to an RDKit grid image of the maximum common substructure (MCS) match between them
+
+     :returns: RDKit grid image, and (if verbose=True) MCS SMARTS string and molecule, and list of molecules for input SMILES strings
+     :rtype: RDKit grid image, and (if verbose=True) string, molecule, and list of molecules
+     :param molecules: The SMARTS molecules to be compared and drawn
+     :type molecules: List of (SMARTS) strings, or dictionary of (SMARTS) string: (legend) string pairs
+     :param align_substructure: Whether to align the MCS substructures when plotting the molecules; default is True
+     :type align_substructure: boolean
+     :param verbose: Whether to return verbose output (MCS SMARTS string and molecule, and list of molecules for input SMILES strings); default is False so calling this function will present a grid image automatically
+     :type verbose: boolean
+     """
+     mols = [Chem.MolFromSmiles(smile) for smile in smiles]
+     res = rdFMCS.FindMCS(mols, **kwargs)
+     mcs_smarts = res.smartsString
+     mcs_mol = Chem.MolFromSmarts(res.smartsString)
+     smarts = res.smartsString
+     smart_mol = Chem.MolFromSmarts(smarts)
+     smarts_and_mols = [smart_mol] + mols
+
+     smarts_legend = "Max. substructure match"
+
+     # If user supplies a dictionary, use the values as legend entries for molecules
+     if isinstance(smiles, dict):
+          mol_legends = [smiles[molecule] for molecule in smiles]
+     else:
+          mol_legends = ["" for mol in mols]
+
+     legends =  [smarts_legend] + mol_legends
+    
+     matches = [""] + [mol.GetSubstructMatch(mcs_mol) for mol in mols]
+
+     subms = [x for x in smarts_and_mols if x.HasSubstructMatch(mcs_mol)]
+
+     Chem.Compute2DCoords(mcs_mol)
+
+     if align_substructure:
+          for m in subms:
+               _ = Chem.GenerateDepictionMatching2DStructure(m, mcs_mol)
+
+     drawing = Draw.MolsToGridImage(smarts_and_mols, highlightAtomLists=matches, legends=legends)
+
+     if verbose:
+          return drawing, mcs_smarts, mcs_mol, mols
+     else:
+          return drawing

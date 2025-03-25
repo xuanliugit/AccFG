@@ -59,11 +59,7 @@ fgs,fg_graph = afg.run(smi, show_atoms=True, show_graph=True)
 print_fg_tree(fg_graph, fgs.keys(), show_atom_idx=True)
 '''
 ├──Primary amide: ((10, 12, 11),)
-│  └──Carbonyl: ((10, 12),)
-├──Triazene: ((1, 3, 4),)
-└──imidazole: ((5, 9, 8, 7, 6),)
-   ├──Hetero N basic H: ((8,),)
-   └──Hetero N nonbasic: ((6,),)
+...
 '''
 print(fgs)
 '''
@@ -87,25 +83,7 @@ print_fg_tree(fg_graph, fgs.keys(), show_atom_idx=True) # This will print the FG
 
 '''
 ├──Primary aliphatic amine: ((21,),)
-├──Carboxylic acid: ((7, 8, 9), (22, 23, 24))
-│  ├──Hydroxy: ((9,), (24,))
-│  └──Carbonyl: ((1, 2), (7, 8), (11, 12), (15, 16), (22, 23))
-├──Carboxylic ester: ((1, 2, 3, 4),)
-│  ├──Carbonyl: ((1, 2), (7, 8), (11, 12), (15, 16), (22, 23))
-│  └──oxy: ((3,),)
-├──Secondary amide: ((15, 16, 14, 13),)
-│  └──Carbonyl: ((1, 2), (7, 8), (11, 12), (15, 16), (22, 23))
-└──Cephem: ((8, 7, 9, 6, 5, 27, 26, 25, 13, 11, 12, 10),)
-   ├──Alkene: ((5, 6),)
-   ├──Dialkylthioether: ((26, 25, 27),)
-   ├──Carboxylic acid: ((7, 8, 9), (22, 23, 24))
-   │  ├──Hydroxy: ((9,), (24,))
-   │  └──Carbonyl: ((1, 2), (7, 8), (11, 12), (15, 16), (22, 23))
-   └──azetidin-2-one: ((12, 11, 13, 25, 10),)
-      ├──Lactam: ((13, 11, 12, 10),)
-      │  └──Amide: ((11, 12, 10), (15, 16, 14))
-      │     └──Carbonyl: ((1, 2), (7, 8), (11, 12), (15, 16), (22, 23))
-      └──azetidine: ((13, 11, 10, 25),)
+├──...
 '''
 ```
 To print functional groups:
@@ -141,12 +119,7 @@ diff = compare_mols(smi_1, smi_2)
 print(diff) # This print the structure difference
 '''
 (([('Secondary amide', 1, [(2, 3, 1)]),
-   ('Benzene', 1, [(8, 9, 10, 11, 12, 13)]),
-   ('thiazole', 1, [(7, 14, 15, 5, 6)])],
-  []),
- ([('Secondary aliphatic amine', 1, [(2,)]),
-   ('benzo[d]thiazole', 1, [(9, 10, 11, 12, 13, 5, 6, 7, 8)])],
-  [('C1 alkane', 2, [[1], [4]])]))
+   ...
 '''
 
 draw_RascalMCES(smi_1, smi_2) # This draw the RascalMCES comparison

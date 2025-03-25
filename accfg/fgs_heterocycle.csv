@@ -1,7 +1,5 @@
 Functional Group,SMARTS Pattern
-### Rings ###
 Barbiturate,C1C(=O)NC(=O)NC1=O
-# heterocycle: 192 cleaned from wikipedia
 aziridine,C1CN1
 2H-azirine,C1=NC1
 oxirane,C1CO1
@@ -196,3 +194,21 @@ azecine,c1ccccncccc1
 "spiro[cyclobutane-1,3'-indole]",C1=Nc2ccccc2C12CCC2
 "spiro[1H-2-benzofuran-3,2'-oxane]",c1ccc2c(c1)COC21CCCCO1
 "1,7-dioxaspiro[3.4]octane",C1CC2(CCO2)CO1
+% metalloles
+Arsole,c1c[As]cc1
+Bismole,c1c[Bi]cc1
+Borole,c1c[B]cc1
+Gallole,c1c[Ga]cc1
+Germole,c1c[Ge]cc1
+Phosphole,c1c[P]cc1
+Pyrrole (Azole),c1cNcc1
+Selenophene,c1c[Se]cc1
+Silole,c1c[Si]cc1
+Stannole,c1c[Sn]cc1
+Stibole,c1c[Sb]cc1
+Tellurophene,c1c[Te]cc1
+Plumbole,c1c[Pb]cc1
+Thiophene,c1cScc1
+Titanole,c1c[#22]cc1
+Zirconole,c1c[#40]cc1
+Ferrole,c1c[#26]cc1
