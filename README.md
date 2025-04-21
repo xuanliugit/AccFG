@@ -38,7 +38,11 @@ To install AccFG, follow these steps:
     ```
 4. Quick start:
     ```bash
+    # Get functional groups from SMILES
     python run_accfg.py 'CN(C)/N=N/C1=C(NC=N1)C(=O)N'
+
+    # Compare two molecules
+    python run_accfg.py 'CNC(=O)Cc1nc(-c2ccccc2)cs1' --compare_smi 'CCNCCc1nc2ccccc2s1'
     ```
 
 The FG dictionary is stored in `./accfg/fgs_common.csv` and `./accfg/fgs_heterocycle.csv`
