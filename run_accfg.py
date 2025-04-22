@@ -11,6 +11,8 @@ import argparse
 afg = AccFG(print_load_info=True)
 
 def run(smi, show_atoms, show_graph):
+    smi = canonical_smiles(smi)
+    print(f'Input SMILES (canonical): {Chem.MolToSmiles(set_atom_idx(smi))}')
     if show_graph:
         fgs,fg_graph = afg.run(smi, show_atoms=show_atoms, show_graph=show_graph)
         print_fg_tree(fg_graph, fgs.keys(), show_atom_idx=True)
