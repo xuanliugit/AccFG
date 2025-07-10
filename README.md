@@ -1,6 +1,11 @@
 # AccFG: Accurate Functional Group Extraction and Molecular Structure Comparison
 
+<div align="center">
 
+[![PyPI version](https://img.shields.io/badge/pypi-AccFG_v0.0.1-blue)](https://pypi.org/project/accfg/0.0.1/)
+[![Python](https://img.shields.io/badge/Python-3.10%2B-blue)](https://www.python.org/)
+
+</div>
 
 ## Table of Contents
 - [Introduction](#introduction)
@@ -19,6 +24,16 @@ AccFG is a tool for precise functional group (FG) extraction and molecular struc
 <img src="./results/TOC.png" width="400">
 
 ## Installation
+
+We provide two methods to install AccFG:
+
+### Installation by pip (recommended)
+
+```bash
+pip install accfg
+```
+
+### Installation from GitHub repository
 
 To install AccFG, follow these steps:
 

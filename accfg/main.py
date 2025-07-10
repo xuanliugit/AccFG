@@ -95,8 +95,11 @@ class AccFG():
     def process_user_defined_fgs(self, user_defined_fgs):
         user_defined_fgs_edit = {}
         for fg_name, fg_smi in user_defined_fgs.items():
-            fg_smi_edit = Chem.MolToSmiles(Chem.MolFromSmiles(fg_smi))
-            fg_smi_edit = fg_smi_edit.replace('[nH]','[n]')
+            if ';' in fg_smi:
+                fg_smi_edit = fg_smi
+            else:
+                fg_smi_edit = Chem.MolToSmiles(Chem.MolFromSmiles(fg_smi))
+                fg_smi_edit = fg_smi_edit.replace('[nH]','[n]')
             user_defined_fgs_edit[fg_name] = fg_smi_edit
         return user_defined_fgs_edit
     

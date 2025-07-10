@@ -20,7 +20,7 @@ def get_RascalMCES(smiles1, smiles2, similarityThreshold=0.7):
     opts.ringMatchesRingOnly = True#True
     # opts.completeRingsOnly = True
     opts.ignoreAtomAromaticity = False#False#True #
-    opts.maxBondMatchPairs = 10000
+    opts.maxBondMatchPairs = 1000
     if similarityThreshold:
         opts.similarityThreshold = similarityThreshold
         
@@ -515,14 +515,17 @@ def compare_mols(target_smiles, ref_smiles, afg = AccFG(), similarityThreshold=0
     unique_ref_fgs_atoms = process_unique_fgs_atoms(unique_ref_fgs, ref_mapped_atoms)
     
     try:
-        if len(unique_target_fgs_atoms) == 0 and len(unique_ref_fgs_atoms) == 0:
+        if len(unique_target_fgs_atoms) == 0 and len(unique_ref_fgs_atoms) == 0 and len(mces_result) == 0:
+            warnings.warn(f'Check the MCES setting! Error on {target_smiles} and {ref_smiles}.')
+            return None
+        elif len(unique_target_fgs_atoms) == 0 and len(unique_ref_fgs_atoms) == 0 and len(mces_result) != 0:
             target_remain_alkane, ref_remain_alkane = get_alkane_diff_MCES(target_smiles, unique_target_fgs_atoms, ref_smiles, unique_ref_fgs_atoms)
         else:
             target_remain_alkane, ref_remain_alkane = get_alkane_diff(target_smiles, unique_target_fgs_atoms, ref_smiles, unique_ref_fgs_atoms)
     except:
         try:
-            target_remain_alkane, ref_remain_alkane = get_alkane_diff_loose(target_smiles, unique_target_fgs_atoms, ref_smiles, unique_ref_fgs_atoms, target_mapped_atoms, ref_mapped_atoms)
             warnings.warn("Using loose method to get the remaining alkanes.")
+            target_remain_alkane, ref_remain_alkane = get_alkane_diff_loose(target_smiles, unique_target_fgs_atoms, ref_smiles, unique_ref_fgs_atoms, target_mapped_atoms, ref_mapped_atoms)
         except:
             warnings.warn("Cannot get the remaining alkanes.")
             return None
