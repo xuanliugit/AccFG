@@ -60,14 +60,14 @@ class AccFG():
         
     def _is_fg_in_mol(self, mol, fg):
         fgmol = Chem.MolFromSmarts(fg)
-        mol = Chem.MolFromSmiles(mol.strip())
+        # mol = Chem.MolFromSmiles(mol.strip())
         mapped_atoms = Chem.Mol.GetSubstructMatches(mol, fgmol, uniquify=True)
         if_mapped = len(mapped_atoms) > 0
         return if_mapped, mapped_atoms
     
     def _freq_fg_in_mol(self, mol, fg):
         fgmol = Chem.MolFromSmarts(fg)
-        mol = Chem.MolFromSmiles(mol.strip())
+        # mol = Chem.MolFromSmiles(mol.strip())
         freq = len(Chem.Mol.GetSubstructMatches(mol, fgmol, uniquify=True))
         if freq > 0:
             return freq
@@ -110,10 +110,13 @@ class AccFG():
         """
         if canonical:
             smiles = canonical_smiles(smiles)
+        mol = Chem.MolFromSmiles(smiles)
+        return self.run_mol(mol, show_atoms=show_atoms, show_graph=show_graph)
         
+    def run_mol(self, mol: object, show_atoms=True, show_graph=False):
         with ProcessPoolExecutor(max_workers=4) as executor:
             futures = {
-                executor.submit(self._is_fg_in_mol, smiles, fg): name
+                executor.submit(self._is_fg_in_mol, mol, fg): name
                 for name, fg in self.dict_fgs.items()
             }
             fgs_in_molec = {futures[future]: future.result()[1] for future in futures if future.result()[0]}
@@ -137,7 +140,7 @@ class AccFG():
                                     
                                 elif (set(target_atoms) == set(ref_atoms)) and ('derivative' not in ref_name):#and (target_atoms in remained_mapped_atoms_tuple_list) 
                                     # If mapping the same set of atoms Check if the number of bonds is smaller than the reference
-                                    mol = Chem.MolFromSmiles(smiles)
+                                    # mol = Chem.MolFromSmiles(smiles)
                                     query_mol_ref = Chem.MolFromSmarts(self.dict_fgs[ref_name])
                                     query_mol_target = Chem.MolFromSmarts(self.dict_fgs[name])
                                     
