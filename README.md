@@ -2,7 +2,7 @@
 
 <div align="center">
 
-[![PyPI version](https://img.shields.io/badge/pypi-AccFG_v0.0.1-blue)](https://pypi.org/project/accfg/0.0.1/)
+[![PyPI version](https://img.shields.io/badge/pypi-AccFG_v0.0.3-blue)](https://pypi.org/project/accfg/0.0.3/)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue)](https://www.python.org/)
 
 </div>
@@ -61,6 +61,8 @@ To install AccFG, follow these steps:
     ```
 
 The FG dictionary is stored in `./accfg/fgs_common.csv` and `./accfg/fgs_heterocycle.csv`
+
+⚠️ The two `fgs*.csv` files are custom-formatted to be compatible with the `AccFG.csv_to_dict()` function in `./accfg/main.py`. Compared to standard CSV files, they include additional annotation syntax to support structured parsing. Lines that begin with `%` are treated as comments to enhance readability and are excluded during data import.
 
 ## Usage
 ### FG extraction

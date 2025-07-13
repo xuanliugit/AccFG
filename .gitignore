@@ -3,8 +3,8 @@ dist/
 __pycache__/
 *.pyc
 __pycache__/
-
 MANIFEST.in
 pyproject.toml
 natural-products.csv?count=all
 setup.py
+test.py
