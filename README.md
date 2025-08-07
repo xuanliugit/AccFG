@@ -5,7 +5,7 @@
 [![PyPI version](https://img.shields.io/badge/pypi-AccFG_v0.0.3-blue)](https://pypi.org/project/accfg/0.0.3/)
 [![PyPI Downloads](https://static.pepy.tech/badge/accfg)](https://pepy.tech/projects/accfg)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue)](https://www.python.org/)
-[![Paper](https://img.shields.io/badge/Paper-acs.jcim.5c01317-yellow)](https:/doi.org/10.1021/acs.jcim.5c01317)
+[![Paper](https://img.shields.io/badge/Paper-10.1021/acs.jcim.5c01317-yellow)](https://pubs.acs.org/doi/10.1021/acs.jcim.5c01317)
 [![Code](https://img.shields.io/badge/Code-xuanliugit/AccFG-red)](https://github.com/xuanliugit/AccFG)
 
 </div>
