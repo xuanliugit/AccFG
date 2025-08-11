@@ -10,6 +10,8 @@
 
 </div>
 
+This is the official code repository for the paper [AccFG: Accurate Functional Group Extraction and Molecular Structure Comparison](https://pubs.acs.org/doi/10.1021/acs.jcim.5c01317).
+
 ## Table of Contents
 - [Introduction](#introduction)
 - [Installation](#installation)
@@ -172,3 +174,15 @@ python run_data.py
 The result is in `./molecule_data`. The code to process the data is in `exam_data.py`
 
 All other examples in the manuscript is in `example.ipynb`.
+
+
+## Cite this work
+```
+@article{liu2025accfg,
+  title={AccFG: Accurate Functional Group Extraction and Molecular Structure Comparison},
+  author={Liu, Xuan and Swaminathan, Sarathkrishna and Zubarev, Dmitry and Ransom, Brandi and Park, Nathaniel and Schmidt, Kristin and Zhao, Huimin},
+  journal={Journal of Chemical Information and Modeling},
+  year={2025},
+  publisher={ACS Publications}
+}
+```
