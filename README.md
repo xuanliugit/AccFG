@@ -10,21 +10,10 @@
 
 </div>
 
-This is the official code repository for the paper [AccFG: Accurate Functional Group Extraction and Molecular Structure Comparison](https://pubs.acs.org/doi/10.1021/acs.jcim.5c01317).
-
-## Table of Contents
-- [Introduction](#introduction)
-- [Installation](#installation)
-- [Usage](#usage)
-    - [FG extraction](#fg-extraction)
-    - [FG extraction visualization](#fg-extraction-visualization)
-    - [Molecular structure comparison](#molecular-structure-comparison)
-    - [Molecular structure comparison visualization](#molecular-structure-comparison-visualization)
-- [Run](#run)
 
 ## Introduction
 
-AccFG is a tool for precise functional group (FG) extraction and molecular structure comparison.
+This is the official code repository for the paper [AccFG: Accurate Functional Group Extraction and Molecular Structure Comparison](https://pubs.acs.org/doi/10.1021/acs.jcim.5c01317). AccFG is a tool for precise functional group (FG) extraction and molecular structure comparison.
 
 <img src="./results/TOC.png" width="400">
 
@@ -32,13 +21,13 @@ AccFG is a tool for precise functional group (FG) extraction and molecular struc
 
 We provide two methods to install AccFG:
 
-### Installation by pip (recommended)
+### Method 1: Installation by pip (recommended)
 
 ```bash
 pip install accfg
 ```
 
-### Installation from GitHub repository
+### Method 2: Installation from GitHub repository
 
 To install AccFG, follow these steps:
 
