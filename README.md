@@ -31,23 +31,22 @@ pip install accfg
 
 To install AccFG, follow these steps:
 
-1. Clone/download the repository:
+1. Clone/download the repository and navigate to the project directory:
     ```bash
     git clone https://github.com/xuanliugit/AccFG.git
-    ```
-2. Navigate to the project directory:
-    ```bash
     cd AccFG
     ```
-3. Install the required dependencies:
+2. Install the required dependencies:
     ```bash
     conda create --name accfg python=3.10
     conda activate accfg
     pip install -r requirements.txt
     ```
-The FG dictionary is stored in `./accfg/fgs_common.csv` and `./accfg/fgs_heterocycle.csv`
+## Call for new functional groups 
 
-⚠️ The two `fgs*.csv` files are custom-formatted to be compatible with the `AccFG.csv_to_dict()` function in `./accfg/main.py`. Compared to standard CSV files, they include additional annotation syntax to support structured parsing. Lines that begin with `%` are treated as comments to enhance readability and are excluded during data import.
+The FG dictionary is stored in `./accfg/fgs_common.csv` and `./accfg/fgs_heterocycle.csv`. You are welcome to report new functional groups or errors in the current files by opening an issue on GitHub or emailing the author at xliu254@illinois.edu. Your contributions will be acknowledged on this page.
+
+Note: The two `fgs*.csv` files are custom-formatted to be compatible with the `AccFG.csv_to_dict()` function in `./accfg/main.py`. Compared to standard CSV files, they include additional annotation syntax to support structured parsing. Lines that begin with `%` are treated as comments to enhance readability and are excluded during data import.
 
 ## Usage
 
