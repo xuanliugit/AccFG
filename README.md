@@ -45,20 +45,21 @@ To install AccFG, follow these steps:
     conda activate accfg
     pip install -r requirements.txt
     ```
-4. Quick start:
-    ```bash
-    # Get functional groups from SMILES
-    python run_accfg.py 'CN(C)/N=N/C1=C(NC=N1)C(=O)N'
-
-    # Compare two molecules
-    python run_accfg.py 'CNC(=O)Cc1nc(-c2ccccc2)cs1' --compare_smi 'CCNCCc1nc2ccccc2s1'
-    ```
-
 The FG dictionary is stored in `./accfg/fgs_common.csv` and `./accfg/fgs_heterocycle.csv`
 
 ⚠️ The two `fgs*.csv` files are custom-formatted to be compatible with the `AccFG.csv_to_dict()` function in `./accfg/main.py`. Compared to standard CSV files, they include additional annotation syntax to support structured parsing. Lines that begin with `%` are treated as comments to enhance readability and are excluded during data import.
 
 ## Usage
+
+### Quick start:
+```bash
+# Get functional groups from SMILES
+python run_accfg.py 'CN(C)/N=N/C1=C(NC=N1)C(=O)N'
+
+# Compare two molecules
+python run_accfg.py 'CNC(=O)Cc1nc(-c2ccccc2)cs1' --compare_smi 'CCNCCc1nc2ccccc2s1'
+```
+
 ### FG extraction
 
 To extract functional groups:
