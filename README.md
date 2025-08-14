@@ -2,7 +2,7 @@
 
 <div align="center">
 
-[![PyPI version](https://img.shields.io/badge/pypi-AccFG_v0.0.3-blue)](https://pypi.org/project/accfg/0.0.3/)
+[![PyPI version](https://img.shields.io/badge/pypi-AccFG_v0.0.4-blue)](https://pypi.org/project/accfg/0.0.4/)
 [![PyPI Downloads](https://static.pepy.tech/badge/accfg)](https://pepy.tech/projects/accfg)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue)](https://www.python.org/)
 [![Paper](https://img.shields.io/badge/Paper-10.1021/acs.jcim.5c01317-yellow)](https://pubs.acs.org/doi/10.1021/acs.jcim.5c01317)
@@ -11,27 +11,20 @@
 </div>
 
 ## 🚀News
+* AccFG v0.0.4: Update FG names with lowercase; Update 3 new FGs (chloroformate etc.)
+
 * AccFG v0.0.3: 
     * update `AccFG.run_mol()` for directing processing rdkit `Mol` object
     * Lite version of AccFg is available through `AccFG(lite=True)`, this will load a simplified FG list (e.g., no primary/secondary hydroxyl but only hydroxyl)
 
-## Table of Contents
-- [Introduction](#introduction)
-- [Installation](#installation)
-- [Usage](#usage)
-    - [FG extraction](#fg-extraction)
-    - [FG extraction visualization](#fg-extraction-visualization)
-    - [Molecular structure comparison](#molecular-structure-comparison)
-    - [Molecular structure comparison visualization](#molecular-structure-comparison-visualization)
-- [Run](#run)
 
-## Introduction
+## 📝Introduction
 
 This is the official code repository for the paper [AccFG: Accurate Functional Group Extraction and Molecular Structure Comparison](https://pubs.acs.org/doi/10.1021/acs.jcim.5c01317). AccFG is a tool for precise functional group (FG) extraction and molecular structure comparison.
 
 <img src="./results/TOC.png" width="400">
 
-## Installation
+## 📥Installation
 
 We provide two methods to install AccFG:
 
@@ -56,13 +49,13 @@ To install AccFG, follow these steps:
     conda activate accfg
     pip install -r requirements.txt
     ```
-## Call for new functional groups 
+## ☎️Call for new functional groups 
 
 The FG dictionary is stored in `./accfg/fgs_common.csv` and `./accfg/fgs_heterocycle.csv`. You are welcome to report new functional groups or errors in the current files by opening an issue on GitHub or emailing the author at xliu254@illinois.edu. Your contributions will be acknowledged on this page.
 
 Note: The two `fgs*.csv` files are custom-formatted to be compatible with the `AccFG.csv_to_dict()` function in `./accfg/main.py`. Compared to standard CSV files, they include additional annotation syntax to support structured parsing. Lines that begin with `%` are treated as comments to enhance readability and are excluded during data import.
 
-## Usage
+## ⚙️Usage
 
 ### Quick start:
 ```bash
@@ -166,7 +159,7 @@ img
 
 <img src='./results/compare_mols.png' width="600">
 
-## Run
+## ⚒️Run
 
 To run the BBBP dataset, Lipophilicity dataset, BACE dataset, and CHEMBL drugs, simply run
 
