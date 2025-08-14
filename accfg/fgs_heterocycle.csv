@@ -194,7 +194,6 @@ azecine,c1ccccncccc1
 "spiro[cyclobutane-1,3'-indole]",C1=Nc2ccccc2C12CCC2
 "spiro[1H-2-benzofuran-3,2'-oxane]",c1ccc2c(c1)COC21CCCCO1
 "1,7-dioxaspiro[3.4]octane",C1CC2(CCO2)CO1
-% other metalloles
 arsole,C1=C[As]C=C1
 bismole,C1=C[Bi]C=C1
 borole,[B]1C=CC=C1

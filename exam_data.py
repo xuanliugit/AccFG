@@ -22,6 +22,8 @@ def plot_top_fgs(path, top_n=15, name=None, img_save_path=None):
 
     # Separate the functional groups and their counts
     fgs, counts = zip(*top_fgs)
+    
+    fgs = [fg.capitalize() for fg in fgs]
 
     # Plot the data
     plt.figure(dpi=300, figsize=(6, 6))  # Set dpi to 300 for higher resolution and adjust figure size

@@ -113,7 +113,7 @@ class AccFG():
         mol = Chem.MolFromSmiles(smiles)
         return self.run_mol(mol, show_atoms=show_atoms, show_graph=show_graph)
         
-    def run_mol(self, mol: object, show_atoms=True, show_graph=False):
+    def run_mol(self, mol: object, show_atoms=True, show_graph=False, use_atom_map_num=False):
         with ProcessPoolExecutor(max_workers=4) as executor:
             futures = {
                 executor.submit(self._is_fg_in_mol, mol, fg): name
@@ -160,15 +160,18 @@ class AccFG():
                             # break
                 if len(remained_mapped_atoms_tuple_list) > 0:
                     fgs_in_molec[name] = remained_mapped_atoms_tuple_list
-        
+        if use_atom_map_num:
+            atom_idx_map_num_dict = {}
+            for atom in mol.GetAtoms():
+                atom_idx_map_num_dict[atom.GetIdx()] = atom.GetAtomMapNum()
+            fgs_in_molec = {fg: [[atom_idx_map_num_dict[atom] for atom in mapped_atoms] for mapped_atoms in mapped_atoms_list] for fg, mapped_atoms_list in fgs_in_molec.items()}
         if show_atoms and not show_graph:
             return fgs_in_molec
         elif show_atoms and show_graph:
             return fgs_in_molec, fg_graph
         else:
             return list(fgs_in_molec.keys())
-        #except:
-        #    return None
+
             
     def run_freq(self, smiles: str) -> str:
         """

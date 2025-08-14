@@ -7,6 +7,11 @@
 
 </div>
 
+## 🚀News
+* AccFG v0.0.3: 
+    * update `AccFG.run_mol()` for directing processing rdkit `Mol` object
+    * Lite version of AccFg is available through `AccFG(lite=True)`, this will load a simplified FG list (e.g., no primary/secondary hydroxyl but only hydroxyl)
+
 ## Table of Contents
 - [Introduction](#introduction)
 - [Installation](#installation)
