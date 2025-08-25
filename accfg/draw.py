@@ -8,7 +8,6 @@ from rdkit.Chem.Draw import rdMolDraw2D
 import matplotlib as mpl
 import networkx as nx
 
-from IPython.display import Image
 from PIL import Image as pilImage
 from PIL import ImageDraw, ImageFont
 import io

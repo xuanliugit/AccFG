@@ -1,24 +1,8 @@
 from rdkit import Chem
-from rdkit.Chem import AllChem
-from rdkit.Chem import rdRascalMCES
-from rdkit.Chem import Draw
-from rdkit import DataStructs
-import heapq
-import re
 import csv
 from concurrent.futures import ProcessPoolExecutor
-import pandas as pd
-import numpy as np
 import os
-from collections import Counter
-from tqdm import tqdm
-from IPython.display import display
-import swifter
-from IPython.display import SVG
 import networkx as nx
-import warnings
-from rdkit.Chem import rdFMCS
-from collections import defaultdict
 
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
