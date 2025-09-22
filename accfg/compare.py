@@ -284,7 +284,7 @@ def get_atoms_list_from_fg_list(fg_list):
     atoms_list = []
     if fg_list == []: return []
     for fgs in fg_list:
-        atoms = fgs[2]
+        atoms = fgs[-1]
         atoms_list.extend(atoms)
     return atoms_list
 
@@ -349,13 +349,8 @@ def remove_atoms_add_hs(mol, atom_idx, outer_atoms):
     ed_mol.CommitBatchEdit()
     return ed_mol.GetMol()
 
-def remove_fg_list_from_mol(mol, fg_list):
-    '''
-    fg_list: [(fg, number, atoms_list),...]
-    '''
-    atoms_list_to_remove = get_atoms_list_from_fg_list(fg_list)
-
-    for atoms in atoms_list_to_remove:
+def remove_atoms_from_mol(mol,atom_list):
+    for atoms in atom_list:
         atom_note_idx_dict = get_atom_idx_from_atom_note(mol, atoms)
         atom_idx = list(atom_note_idx_dict.values())
         outer_atoms = get_outer_atoms_from_atoms(mol, atom_idx)
@@ -367,6 +362,15 @@ def remove_fg_list_from_mol(mol, fg_list):
         else:
             mol = remove_atoms_add_hs(mol, atom_idx, outer_atoms)
 
+    return mol
+
+def remove_fg_list_from_mol(mol, fg_list):
+    '''
+    fg_list: [(fg, number, atoms_list),...]
+    '''
+    atoms_list_to_remove = get_atoms_list_from_fg_list(fg_list)
+
+    mol = remove_atoms_from_mol(mol,atoms_list_to_remove)
     return mol
 
 def get_outer_bond_from_fg_list(mol, fg_list):

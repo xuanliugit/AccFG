@@ -2,7 +2,7 @@
 
 <div align="center">
 
-[![PyPI version](https://img.shields.io/badge/pypi-AccFG_v0.0.5-blue)](https://pypi.org/project/accfg/0.0.5/)
+[![PyPI version](https://img.shields.io/badge/pypi-AccFG_v0.0.6-blue)](https://pypi.org/project/accfg/)
 [![PyPI Downloads](https://static.pepy.tech/badge/accfg)](https://pepy.tech/projects/accfg)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue)](https://www.python.org/)
 [![Paper](https://img.shields.io/badge/Paper-10.1021/acs.jcim.5c01317-yellow)](https://pubs.acs.org/doi/10.1021/acs.jcim.5c01317)
@@ -10,8 +10,9 @@
 
 </div>
 
+
 ## 🚀News
-* (8/24/2025) AccFG v0.0.5: Fix bugs during import
+* (9/22/2025) AccFG v0.0.6: Fix bugs during import
 * AccFG v0.0.4: Update FG names with lowercase; Update 3 new FGs (chloroformate etc.)
 
 * AccFG v0.0.3: 
@@ -48,7 +49,8 @@ To install AccFG, follow these steps:
     ```bash
     conda create --name accfg python=3.10
     conda activate accfg
-    pip install -r requirements.txt
+    pip install -r requirements.txt 
+    # Or "pip install -e ."
     ```
 ## ☎️Call for new functional groups 
 
