@@ -1,3 +1,28 @@
 [build-system]
-requires = ["setuptools"]
+requires = ["setuptools>=61"]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "accfg"
+version = "0.0.8"
+description = "AccFG: Molecule functional group extraction and molecular structure comparison"
+readme = { file = "README.md", content-type = "text/markdown" }
+authors = [{ name = "Xuan Liu", email = "xliu254@illinois.edu" }]
+requires-python = ">=3.10"
+dependencies = [
+    "matplotlib>=3.10.1",
+    "networkx>=3.3.1",
+    "numpy>=2.2.4",
+    "pandas>=2.2.3",
+    "Pillow>=11.1.0",
+    "rdkit>=2024.9.4",
+    "swifter>=1.4.0",
+    "tqdm",
+]
+urls = { Homepage = "https://github.com/xuanliugit/AccFG" }
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+include = ["accfg*"]

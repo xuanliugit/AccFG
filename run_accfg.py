@@ -3,8 +3,6 @@ from rdkit.Chem import Draw
 from accfg import (AccFG, draw_mol_with_fgs, molimg, 
                    img_grid,  compare_mols, draw_compare_mols, set_atom_idx, canonical_smiles,
                    draw_RascalMCES, print_fg_tree)
-
-from IPython.display import Image
 import networkx as nx
 import argparse
 
