@@ -1,0 +1,19 @@
+site_name: AccFG
+site_url: https://xuanliugit.github.io/accfg/
+repo_url: https://github.com/xuanliugit/accfg
+repo_name: AccFG
+
+theme:
+  name: material
+  features:
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.suggest
+    - search.highlight
+
+nav:
+  - Home: index.md
+  - Quickstart:
+    - Installation: quickstart/installation.md
+    - Edit FG list: quickstart/edit_fg_list.md
