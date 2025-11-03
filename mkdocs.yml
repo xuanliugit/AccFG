@@ -17,3 +17,10 @@ nav:
   - Quickstart:
     - Installation: quickstart/installation.md
     - Edit FG list: quickstart/edit_fg_list.md
+  - Tutorials:
+    - Case Study: example/case-study.md
+  - Function Reference:
+    - accfg.main: function/main.md
+    - accfg.compare: function/compare.md
+    - accfg.draw: function/draw.md
+  - License: license.md
