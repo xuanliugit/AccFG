@@ -24,7 +24,7 @@ Before editing, create a backup copy so you can revert if a new entry causes par
 
    | Functional Group | SMARTS Pattern        |
    |------------------|-----------------------|
-   | Example group    | `C(=O)O[H]`           |
+   | Example group    | `SMARTS`           |
 
 3. Save the file and rerun your script. AccFG will pick up the changes on the next import.
 
