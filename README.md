@@ -2,11 +2,10 @@
 
 <div align="center">
 
-[![PyPI version](https://img.shields.io/badge/pypi-AccFG_v0.0.8-blue)](https://pypi.org/project/accfg/)
+[![PyPI - Version](https://img.shields.io/pypi/v/accfg)](https://pypi.org/project/accfg/)
 [![Documentation](https://img.shields.io/badge/GitHub%20Pages-Documentation-blue)](https://xuanliugit.github.io/AccFG/)
-[![Slides](https://img.shields.io/badge/Slides-Download-blue)](https://xuanliugit.github.io/AccFG/AIChE_2025_Slides.pdf)
 [![Paper](https://img.shields.io/badge/Paper-10.1021/acs.jcim.5c01317-yellow)](https://pubs.acs.org/doi/10.1021/acs.jcim.5c01317)
-[![Code](https://img.shields.io/badge/Code-xuanliugit/AccFG-red)](https://github.com/xuanliugit/AccFG)
+[![Code](https://img.shields.io/badge/Code-xuanliugit/AccFG-blue)](https://github.com/xuanliugit/AccFG)
 [![PyPI Downloads](https://static.pepy.tech/badge/accfg)](https://pepy.tech/projects/accfg)
 
 
