@@ -3,16 +3,17 @@
 <div align="center">
 
 [![PyPI - Version](https://img.shields.io/pypi/v/accfg)](https://pypi.org/project/accfg/)
-[![Documentation](https://img.shields.io/badge/GitHub%20Pages-Documentation-blue)](https://xuanliugit.github.io/AccFG/)
+[![Documentation](https://img.shields.io/badge/Pages-Documentation-blue)](https://xuanliugit.github.io/AccFG/)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1Tz5f6QvUfB_CINZL1RHo1ynfMc7xuMKn?usp=sharing)
 [![Paper](https://img.shields.io/badge/Paper-10.1021/acs.jcim.5c01317-yellow)](https://pubs.acs.org/doi/10.1021/acs.jcim.5c01317)
 [![Code](https://img.shields.io/badge/Code-xuanliugit/AccFG-blue)](https://github.com/xuanliugit/AccFG)
 [![PyPI Downloads](https://static.pepy.tech/badge/accfg)](https://pepy.tech/projects/accfg)
-
 
 </div>
 
 
 ## 🚀News
+* Try AccFG in [Colab](https://colab.research.google.com/drive/1Tz5f6QvUfB_CINZL1RHo1ynfMc7xuMKn?usp=sharing).
 * (9/22/2025) AccFG v0.0.7: Fix bugs during import
 * AccFG v0.0.4: Update FG names with lowercase; Update 3 new FGs (chloroformate etc.)
 
@@ -76,6 +77,7 @@ To extract functional groups:
 ```python
 # example.py
 from accfg import AccFG
+from accfg.draw import print_fg_tree
 
 afg = AccFG(print_load_info=True)
 smi = 'CN(C)/N=N/C1=C(NC=N1)C(=O)N'
@@ -98,6 +100,7 @@ User-defined FGs Example:
 ```python
 # example.py
 from accfg import AccFG
+from accfg.draw import print_fg_tree
 
 my_fgs_dict = {'Cephem': 'O=C(O)C1=CCS[C@@H]2CC(=O)N12', 'Thioguanine': 'Nc1nc(=S)c2[nH]cnc2[nH]1'}
 my_afg = AccFG(user_defined_fgs=my_fgs_dict,print_load_info=True)
@@ -127,7 +130,7 @@ print(fgs) # Show top level FGs
 ### FG extraction visualization
 
 ```python
-from accfg import draw_mol_with_fgs, molimg
+from accfg.draw import draw_mol_with_fgs, molimg
 
 molimg(draw_mol_with_fgs(cephalosporin_C, afg=my_afg, img_size=(900,900)))
 ```
@@ -138,7 +141,8 @@ This will show image with FGs highlighted
 
 ### Molecular structure comparison
 ```python
-from accfg import AccFG, compare_mols, draw_compare_mols
+from accfg import AccFG, compare_mols
+from accfg.draw import draw_compare_mols, draw_RascalMCES, img_grid
 
 smi_1,smi_2 = ('CNC(=O)Cc1nc(-c2ccccc2)cs1','CCNCCc1nc2ccccc2s1')
 diff = compare_mols(smi_1, smi_2)
@@ -165,7 +169,7 @@ img
 
 ## ⚒️Run
 
-To run the BBBP dataset, Lipophilicity dataset, BACE dataset, and CHEMBL drugs, simply run
+To run the BBBP dataset, Lipophilicity dataset, BACE dataset, and CHEMBL drugs, simply run:
 
 ```
 python run_data.py
@@ -173,7 +177,7 @@ python run_data.py
 
 The result is in `./molecule_data`. The code to process the data is in `exam_data.py`
 
-All other examples in the manuscript is in `example.ipynb`.
+All other examples in the manuscript are in `example.ipynb`.
 
 
 ## Cite this work
