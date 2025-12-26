@@ -54,9 +54,9 @@ To install AccFG, follow these steps:
     pip install -r requirements.txt 
     # Or "pip install -e ."
     ```
-## ☎️Call for new functional groups 
+## Functional groups in AccFG
 
-The FG dictionary is stored in `./accfg/fgs_common.csv` and `./accfg/fgs_heterocycle.csv`. You are welcome to report new functional groups or errors in the current files by opening an issue on GitHub or emailing the author at xliu254@illinois.edu. Your contributions will be acknowledged on this page.
+The FG dictionary is stored in `./accfg/fgs_common.csv` and `./accfg/fgs_heterocycle.csv`. 
 
 Note: The two `fgs*.csv` files are custom-formatted to be compatible with the `AccFG.csv_to_dict()` function in `./accfg/main.py`. Compared to standard CSV files, they include additional annotation syntax to support structured parsing. Lines that begin with `%` are treated as comments to enhance readability and are excluded during data import.
 
@@ -186,6 +186,9 @@ All other examples in the manuscript are in `example.ipynb`.
   title={AccFG: Accurate Functional Group Extraction and Molecular Structure Comparison},
   author={Liu, Xuan and Swaminathan, Sarathkrishna and Zubarev, Dmitry and Ransom, Brandi and Park, Nathaniel and Schmidt, Kristin and Zhao, Huimin},
   journal={Journal of Chemical Information and Modeling},
+  volume={65},
+  number={16},
+  pages={8593--8602},
   year={2025},
   publisher={ACS Publications}
 }
