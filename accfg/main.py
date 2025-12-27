@@ -1,6 +1,6 @@
 from rdkit import Chem
 import csv
-from concurrent.futures import ProcessPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, as_completed
 import os
 import networkx as nx
 
@@ -44,14 +44,12 @@ class AccFG():
         
     def _is_fg_in_mol(self, mol, fg):
         fgmol = Chem.MolFromSmarts(fg)
-        # mol = Chem.MolFromSmiles(mol.strip())
         mapped_atoms = Chem.Mol.GetSubstructMatches(mol, fgmol, uniquify=True)
         if_mapped = len(mapped_atoms) > 0
         return if_mapped, mapped_atoms
     
     def _freq_fg_in_mol(self, mol, fg):
         fgmol = Chem.MolFromSmarts(fg)
-        # mol = Chem.MolFromSmiles(mol.strip())
         freq = len(Chem.Mol.GetSubstructMatches(mol, fgmol, uniquify=True))
         if freq > 0:
             return freq
@@ -89,8 +87,7 @@ class AccFG():
     
     def run(self, smiles: str, show_atoms=True, show_graph=False, canonical=True) -> dict:
         """
-        Input a molecule SMILES or name.
-        Returns a list of functional groups identified by their common name (in natural language).
+        See run_mol for details.
         """
         if canonical:
             smiles = canonical_smiles(smiles)
@@ -98,52 +95,64 @@ class AccFG():
         return self.run_mol(mol, show_atoms=show_atoms, show_graph=show_graph)
         
     def run_mol(self, mol: object, show_atoms=True, show_graph=False, use_atom_map_num=False):
-        with ProcessPoolExecutor(max_workers=4) as executor:
-            futures = {
-                executor.submit(self._is_fg_in_mol, mol, fg): name
-                for name, fg in self.dict_fgs.items()
-            }
-            fgs_in_molec = {futures[future]: future.result()[1] for future in futures if future.result()[0]}
+        """
+        Args:
+            mol (object): RDKit molecule object
+            show_atoms (bool, optional): Whether to show atom indices. Defaults to True.
+            show_graph (bool, optional): Whether to show the functional group graph. Defaults to False.
+            use_atom_map_num (bool, optional): Whether to use atom map numbers. Defaults to False.
+        Returns:
+            If show_atoms is True and show_graph is False:
+                dict: {functional group name: list of tuples of atom indices}
+            If show_atoms is True and show_graph is True:
+                tuple: (dict as above, functional group graph)
+            If show_atoms is False:
+                list: [functional group names]
+        """
+        fgs_in_molec = {}
+        for fg_name, fg_smi in self.dict_fgs.items():
+            is_fg_in_mol, mapped_atoms = self._is_fg_in_mol(mol, fg_smi)
+            if is_fg_in_mol:
+                fgs_in_molec[fg_name] = mapped_atoms    
+        # Check if the functional groups are subgroups of other functional groups
+        # Build FG graph
+        fg_graph = nx.DiGraph()
+        fg_graph.add_nodes_from(list(fgs_in_molec.keys()))
+        
+        for name, mapped_atoms in list(fgs_in_molec.items()):
+            fg_graph.nodes[name]['mapped_atoms'] = mapped_atoms
             
-            # Check if the functional groups are subgroups of other functional groups
-            # Build FG graph
-            fg_graph = nx.DiGraph()
-            fg_graph.add_nodes_from(list(fgs_in_molec.keys()))
-            
-            for name, mapped_atoms in list(fgs_in_molec.items()):
-                fg_graph.nodes[name]['mapped_atoms'] = mapped_atoms
-                
-                remained_mapped_atoms_tuple_list = list(mapped_atoms) # a list of tuples containing atoms for the functional group
-                for ref_name, ref_mapped_atoms in list(fgs_in_molec.items()):
-                    if name != ref_name:
-                        for target_atoms in mapped_atoms: # check if the target atoms are a subset of the reference atoms
-                            for ref_atoms in ref_mapped_atoms:
-                                if (set(target_atoms) < set(ref_atoms)) and ('derivative' not in ref_name):#and (target_atoms in remained_mapped_atoms_tuple_list) 
+            remained_mapped_atoms_tuple_list = list(mapped_atoms) # a list of tuples containing atoms for the functional group
+            for ref_name, ref_mapped_atoms in list(fgs_in_molec.items()):
+                if name != ref_name:
+                    for target_atoms in mapped_atoms: # check if the target atoms are a subset of the reference atoms
+                        for ref_atoms in ref_mapped_atoms:
+                            if (set(target_atoms) < set(ref_atoms)) and ('derivative' not in ref_name):#and (target_atoms in remained_mapped_atoms_tuple_list) 
+                                if target_atoms in remained_mapped_atoms_tuple_list: remained_mapped_atoms_tuple_list.remove(target_atoms)
+                                fg_graph.add_edge(ref_name, name)
+                                
+                            elif (set(target_atoms) == set(ref_atoms)) and ('derivative' not in ref_name):#and (target_atoms in remained_mapped_atoms_tuple_list) 
+                                # If mapping the same set of atoms Check if the number of bonds is smaller than the reference
+                                # mol = Chem.MolFromSmiles(smiles)
+                                query_mol_ref = Chem.MolFromSmarts(self.dict_fgs[ref_name])
+                                query_mol_target = Chem.MolFromSmarts(self.dict_fgs[name])
+                                
+                                ref_bonds = self._get_bonds_from_match(query_mol_ref, mol, ref_atoms)
+                                target_bonds = self._get_bonds_from_match(query_mol_target, mol, target_atoms)
+                                if len(target_bonds) < len(ref_bonds):
                                     if target_atoms in remained_mapped_atoms_tuple_list: remained_mapped_atoms_tuple_list.remove(target_atoms)
                                     fg_graph.add_edge(ref_name, name)
-                                    
-                                elif (set(target_atoms) == set(ref_atoms)) and ('derivative' not in ref_name):#and (target_atoms in remained_mapped_atoms_tuple_list) 
-                                    # If mapping the same set of atoms Check if the number of bonds is smaller than the reference
-                                    # mol = Chem.MolFromSmiles(smiles)
-                                    query_mol_ref = Chem.MolFromSmarts(self.dict_fgs[ref_name])
-                                    query_mol_target = Chem.MolFromSmarts(self.dict_fgs[name])
-                                    
-                                    ref_bonds = self._get_bonds_from_match(query_mol_ref, mol, ref_atoms)
-                                    target_bonds = self._get_bonds_from_match(query_mol_target, mol, target_atoms)
-                                    if len(target_bonds) < len(ref_bonds):
-                                        if target_atoms in remained_mapped_atoms_tuple_list: remained_mapped_atoms_tuple_list.remove(target_atoms)
-                                        fg_graph.add_edge(ref_name, name)
-                                    if len(target_bonds) == len(ref_bonds): # only remove atoms
-                                        if target_atoms in remained_mapped_atoms_tuple_list: remained_mapped_atoms_tuple_list.remove(target_atoms)
-                        if len(remained_mapped_atoms_tuple_list) == 0:
-                            fgs_in_molec.pop(name,None)
-                            if show_graph:
-                                continue
-                            else:
-                                break
-                            # break
-                if len(remained_mapped_atoms_tuple_list) > 0:
-                    fgs_in_molec[name] = remained_mapped_atoms_tuple_list
+                                if len(target_bonds) == len(ref_bonds): # only remove atoms
+                                    if target_atoms in remained_mapped_atoms_tuple_list: remained_mapped_atoms_tuple_list.remove(target_atoms)
+                    if len(remained_mapped_atoms_tuple_list) == 0:
+                        fgs_in_molec.pop(name,None)
+                        if show_graph:
+                            continue
+                        else:
+                            break
+                        # break
+            if len(remained_mapped_atoms_tuple_list) > 0:
+                fgs_in_molec[name] = remained_mapped_atoms_tuple_list
         if use_atom_map_num:
             atom_idx_map_num_dict = {}
             for atom in mol.GetAtoms():

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "accfg"
-version = "0.0.8"
+version = "0.0.9"
 description = "AccFG: Molecule functional group extraction and molecular structure comparison"
 readme = { file = "README.md", content-type = "text/markdown" }
 authors = [{ name = "Xuan Liu", email = "xliu254@illinois.edu" }]
@@ -26,3 +26,6 @@ include-package-data = true
 
 [tool.setuptools.packages.find]
 include = ["accfg*"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]

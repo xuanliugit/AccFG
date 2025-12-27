@@ -4,5 +4,4 @@ __pycache__/
 *.pyc
 __pycache__/
 natural-products.csv?count=all
-test.py
 build
