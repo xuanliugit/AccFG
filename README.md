@@ -26,7 +26,7 @@
 
 This is the official code repository for the paper [AccFG: Accurate Functional Group Extraction and Molecular Structure Comparison](https://pubs.acs.org/doi/10.1021/acs.jcim.5c01317). AccFG is a tool for precise functional group (FG) extraction and molecular structure comparison.
 
-<img src="./results/TOC.png" width="400">
+<img src="./results/TOC.png" width="800">
 
 ## 📥Installation
 
