@@ -72,6 +72,7 @@ python run_accfg.py 'CNC(=O)Cc1nc(-c2ccccc2)cs1' --compare_smi 'CCNCCc1nc2ccccc2
 ```
 
 ### FG extraction
+> For brief results, we recommend setting `AccFG(..., lite=True)`. For example, lite mode combines specific hydroxyl subtypes, such as secondary OH and tertiary OH, into one general hydroxyl group.
 
 To extract functional groups:
 ```python
@@ -79,7 +80,7 @@ To extract functional groups:
 from accfg import AccFG
 from accfg.draw import print_fg_tree
 
-afg = AccFG(print_load_info=True)
+afg = AccFG(print_load_info=True) # AccFG(print_load_info=True, lite=True) for lite version
 smi = 'CN(C)/N=N/C1=C(NC=N1)C(=O)N'
 
 fgs,fg_graph = afg.run(smi, show_atoms=True, show_graph=True)
@@ -166,6 +167,32 @@ img
 ```
 
 <img src='./results/compare_mols.png' width="600">
+
+### Advanced usage
+
+You can customize which functional group definitions are loaded when creating an `AccFG` instance:
+
+```python
+from accfg import AccFG
+
+afg = AccFG(
+    common_fgs=True,
+    heterocycle_fgs=True,
+    user_defined_fgs={},
+    print_load_info=False,
+    lite=False,
+)
+```
+
+| Argument | Default value | Description |
+| --- | --- | --- |
+| `common_fgs` | `True` | Load the built-in common functional group definitions from `accfg/fgs_common.csv`. |
+| `heterocycle_fgs` | `True` | Load the built-in heterocycle functional group definitions from `accfg/fgs_heterocycle.csv`. |
+| `user_defined_fgs` | `{}` | Add custom functional groups as `{name: SMILES_or_SMARTS}`. These are merged with the built-in definitions. |
+| `print_load_info` | `False` | Print how many functional groups were loaded when the instance is created. |
+| `lite` | `False` | Use the simplified common functional group list by skipping entries marked for the full version. |
+
+
 
 ## ⚒️Run
 
