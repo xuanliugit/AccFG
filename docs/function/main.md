@@ -6,7 +6,7 @@ Core functional group detection logic, including the `AccFG` class and helper ut
 
 ### Constructor
 
-`AccFG(common_fgs=True, heterocycle_fgs=True, user_defined_fgs=None, print_load_info=False, lite=False)`
+`AccFG(common_fgs=True, heterocycle_fgs=True, user_defined_fgs=None, print_load_info=False, lite=False, exclude_fgs=None)`
 
 - **Parameters**
   - `common_fgs` (`bool`): Load bundled common functional groups from `accfg/fgs_common.csv`.
@@ -14,9 +14,11 @@ Core functional group detection logic, including the `AccFG` class and helper ut
   - `user_defined_fgs` (`dict[str, str] | None`): Optional SMARTS overrides/additions supplied by the caller.
   - `print_load_info` (`bool`): Emit a summary of how many groups were loaded.
   - `lite` (`bool`): When true, the CSV reader skips rows marked with `%` or `#`, yielding a lighter rule set.
+  - `exclude_fgs` (`list[str] | None`): Functional group names to remove from the active dictionary. Use `['rings']` to disable heterocycle functional groups and exclude `benzene`.
 - **Behaviour**
   - Populates dictionaries for each source and merges them into `self.dict_fgs`.
   - User-defined patterns are canonicalised and `[nH]` is normalised to `[n]` via `process_user_defined_fgs`.
+  - Applies `exclude_fgs` after loading built-in and user-defined dictionaries.
   - Stores whether the lite mode was requested for later use.
 
 ### `_is_fg_in_mol(self, mol, fg)`
@@ -47,6 +49,22 @@ Sanitise custom functional group definitions.
 - If a SMARTS string already uses `;` (indicating an explicit SMARTS pattern), it is preserved.
 - Otherwise, the SMILES is canonicalised and aromatic `[nH]` handling is normalised to `[n]`.
 - Returns a new dictionary with processed SMARTS strings.
+
+### `search_fg_name(self, fg_name)`
+
+Look up a functional group definition by name.
+
+- **Parameters**
+  - `fg_name` (`str`): Functional group name.
+- **Returns**: The active SMARTS/SMILES pattern for the functional group, or `False` when the name is not loaded.
+
+### `search_fg_smiles(self, fg_smiles)`
+
+Look up a functional group name by its SMARTS/SMILES pattern.
+
+- **Parameters**
+  - `fg_smiles` (`str`): Functional group SMARTS or SMILES pattern.
+- **Returns**: The matching functional group name, or `False` when the pattern is not loaded.
 
 ### `run(self, smiles, show_atoms=True, show_graph=False, canonical=True)`
 

@@ -181,6 +181,7 @@ afg = AccFG(
     user_defined_fgs={},
     print_load_info=False,
     lite=False,
+    exclude_fgs=None,
 )
 ```
 
@@ -191,6 +192,11 @@ afg = AccFG(
 | `user_defined_fgs` | `{}` | Add custom functional groups as `{name: SMILES_or_SMARTS}`. These are merged with the built-in definitions. |
 | `print_load_info` | `False` | Print how many functional groups were loaded when the instance is created. |
 | `lite` | `False` | Use the simplified common functional group list by skipping entries marked for the full version. |
+| `exclude_fgs` | `None` | Exclude functional groups by name, for example `['hydroxy']`. Use `['rings']` to disable heterocycle functional groups and exclude `benzene`. |
+
+```python
+afg = AccFG(exclude_fgs=['rings'])
+```
 
 
 

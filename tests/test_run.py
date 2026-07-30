@@ -44,4 +44,32 @@ def test_user_defined_fgs():
             'carboxylic ester': [(1, 2, 3)], 
             'secondary amide': [(15, 16, 14)], 
             'Cephem': [(8, 7, 9, 6, 5, 27, 26, 25, 13, 11, 12, 10)]} == fgs
-   
+
+def test_exclude_fgs():
+    afg = AccFG(print_load_info=False, lite=True, exclude_fgs=['hydroxy'])
+    smi = 'CCO'
+    fgs = afg.run(smi, show_atoms=True, show_graph=False)
+
+    assert afg.search_fg_name('hydroxy') is False
+    assert {} == fgs
+
+def test_exclude_rings():
+    afg = AccFG(print_load_info=False, exclude_fgs=['rings'])
+
+    assert {} == afg.dict_fg_heterocycle
+    assert afg.search_fg_name('benzene') is False
+    assert afg.search_fg_name('pyridine') is False
+    assert [] == afg.run('c1ccccc1', show_atoms=False, show_graph=False)
+    assert 'pyridine' not in afg.run('c1ccncc1', show_atoms=False, show_graph=False)
+
+def test_search_fg_name():
+    afg = AccFG(print_load_info=False, lite=True)
+
+    assert '[OX2H]' == afg.search_fg_name('hydroxy')
+    assert afg.search_fg_name('not in dict') is False
+
+def test_search_fg_smiles():
+    afg = AccFG(print_load_info=False)
+
+    assert 'benzene' == afg.search_fg_smiles('c1ccccc1')
+    assert afg.search_fg_smiles('CC') is False

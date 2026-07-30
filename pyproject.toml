@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "accfg"
-version = "0.0.9"
+version = "0.1.0"
 description = "AccFG: Molecule functional group extraction and molecular structure comparison"
 readme = { file = "README.md", content-type = "text/markdown" }
 authors = [{ name = "Xuan Liu", email = "xliu254@illinois.edu" }]
