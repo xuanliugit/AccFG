@@ -1,0 +1,1408 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://xuanliugit.github.io/accfg/function/compare/">
+      
+      
+        <link rel="prev" href="../main/">
+      
+      
+        <link rel="next" href="../draw/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>accfg.compare - AccFG</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#accfgcompare" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="AccFG" class="md-header__button md-logo" aria-label="AccFG" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            AccFG
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              accfg.compare
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/xuanliugit/accfg" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    AccFG
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="AccFG" class="md-nav__button md-logo" aria-label="AccFG" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    AccFG
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/xuanliugit/accfg" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    AccFG
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Quickstart
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quickstart/installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quickstart/edit_fg_list/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Edit FG list
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutorials
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tutorials
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../example/case-study/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Case Study
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Function Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Function Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../main/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    accfg.main
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    accfg.compare
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    accfg.compare
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#high-level-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        High-Level Workflow
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="High-Level Workflow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#compare_molstarget_smiles-ref_smiles-afgaccfg-similaritythreshold07-canonicaltrue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        compare_mols(target_smiles, ref_smiles, afg=AccFG(), similarityThreshold=0.7, canonical=True)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mces-utilities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MCES Utilities
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MCES Utilities">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get_rascalmcessmiles1-smiles2-similaritythreshold07" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get_RascalMCES(smiles1, smiles2, similarityThreshold=0.7)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remove_atoms_from_molmol-atom_set" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        remove_atoms_from_mol(mol, atom_set)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_unique_fgs_with_all_atomstarget_fgs-ref_fgs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get_unique_fgs_with_all_atoms(target_fgs, ref_fgs)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#process_unique_fgs_atomsunique_fgs-mapped_atoms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        process_unique_fgs_atoms(unique_fgs, mapped_atoms)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flatten_fg_diff_atomsfg_diff_atoms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        flatten_fg_diff_atoms(fg_diff_atoms)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#alkane-fragment-helpers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Alkane Fragment Helpers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Alkane Fragment Helpers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get_alkane_and_atom_from_remain_molremain_mol_alkane" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get_alkane_and_atom_from_remain_mol(remain_mol_alkane)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#project_atom_num_to_atom_notemol" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        project_atom_num_to_atom_note(mol)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_alkane_and_atom_from_remain_mol_with_remapremain_mol_alkane-original_mol_with_atom_num" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get_alkane_and_atom_from_remain_mol_with_remap(remain_mol_alkane, original_mol_with_atom_num)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set_atom_idxsmi-labelmolatommapnumber" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        set_atom_idx(smi, label='molAtomMapNumber')
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#merge_alkane_synonymsfg_list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        merge_alkane_synonyms(fg_list)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_alkane_diff_splittarget_remain_mol_frags-ref_remain_mol_frags" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get_alkane_diff_split(target_remain_mol_frags, ref_remain_mol_frags)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_alkane_diff_from_mol_mcstarget_remain_mol-ref_remain_mol" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get_alkane_diff_from_mol_MCS(target_remain_mol, ref_remain_mol)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_alkane_diff_legacytarget_smiles-unique_target_fgs_atoms-ref_smiles-unique_ref_fgs_atoms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get_alkane_diff_legacy(target_smiles, unique_target_fgs_atoms, ref_smiles, unique_ref_fgs_atoms)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_alkane_diff_mcestarget_smiles-unique_target_fgs_atoms-ref_smiles-unique_ref_fgs_atoms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get_alkane_diff_MCES(target_smiles, unique_target_fgs_atoms, ref_smiles, unique_ref_fgs_atoms)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_alkane_difftarget_smiles-unique_target_fgs_atoms-ref_smiles-unique_ref_fgs_atoms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get_alkane_diff(target_smiles, unique_target_fgs_atoms, ref_smiles, unique_ref_fgs_atoms)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_alkane_diff_loosetarget_smiles-unique_target_fgs_atoms-ref_smiles-unique_ref_fgs_atoms-target_mapped_atoms-ref_mapped_atoms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get_alkane_diff_loose(target_smiles, unique_target_fgs_atoms, ref_smiles, unique_ref_fgs_atoms, target_mapped_atoms, ref_mapped_atoms)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#atom-index-bond-utilities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Atom Index &amp; Bond Utilities
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#legacy-support-constants" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Legacy &amp; Support Constants
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../draw/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    accfg.draw
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../license/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    License
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#high-level-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        High-Level Workflow
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="High-Level Workflow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#compare_molstarget_smiles-ref_smiles-afgaccfg-similaritythreshold07-canonicaltrue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        compare_mols(target_smiles, ref_smiles, afg=AccFG(), similarityThreshold=0.7, canonical=True)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mces-utilities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MCES Utilities
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MCES Utilities">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get_rascalmcessmiles1-smiles2-similaritythreshold07" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get_RascalMCES(smiles1, smiles2, similarityThreshold=0.7)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remove_atoms_from_molmol-atom_set" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        remove_atoms_from_mol(mol, atom_set)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_unique_fgs_with_all_atomstarget_fgs-ref_fgs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get_unique_fgs_with_all_atoms(target_fgs, ref_fgs)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#process_unique_fgs_atomsunique_fgs-mapped_atoms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        process_unique_fgs_atoms(unique_fgs, mapped_atoms)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flatten_fg_diff_atomsfg_diff_atoms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        flatten_fg_diff_atoms(fg_diff_atoms)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#alkane-fragment-helpers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Alkane Fragment Helpers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Alkane Fragment Helpers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get_alkane_and_atom_from_remain_molremain_mol_alkane" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get_alkane_and_atom_from_remain_mol(remain_mol_alkane)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#project_atom_num_to_atom_notemol" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        project_atom_num_to_atom_note(mol)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_alkane_and_atom_from_remain_mol_with_remapremain_mol_alkane-original_mol_with_atom_num" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get_alkane_and_atom_from_remain_mol_with_remap(remain_mol_alkane, original_mol_with_atom_num)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set_atom_idxsmi-labelmolatommapnumber" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        set_atom_idx(smi, label='molAtomMapNumber')
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#merge_alkane_synonymsfg_list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        merge_alkane_synonyms(fg_list)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_alkane_diff_splittarget_remain_mol_frags-ref_remain_mol_frags" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get_alkane_diff_split(target_remain_mol_frags, ref_remain_mol_frags)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_alkane_diff_from_mol_mcstarget_remain_mol-ref_remain_mol" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get_alkane_diff_from_mol_MCS(target_remain_mol, ref_remain_mol)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_alkane_diff_legacytarget_smiles-unique_target_fgs_atoms-ref_smiles-unique_ref_fgs_atoms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get_alkane_diff_legacy(target_smiles, unique_target_fgs_atoms, ref_smiles, unique_ref_fgs_atoms)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_alkane_diff_mcestarget_smiles-unique_target_fgs_atoms-ref_smiles-unique_ref_fgs_atoms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get_alkane_diff_MCES(target_smiles, unique_target_fgs_atoms, ref_smiles, unique_ref_fgs_atoms)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_alkane_difftarget_smiles-unique_target_fgs_atoms-ref_smiles-unique_ref_fgs_atoms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get_alkane_diff(target_smiles, unique_target_fgs_atoms, ref_smiles, unique_ref_fgs_atoms)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_alkane_diff_loosetarget_smiles-unique_target_fgs_atoms-ref_smiles-unique_ref_fgs_atoms-target_mapped_atoms-ref_mapped_atoms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get_alkane_diff_loose(target_smiles, unique_target_fgs_atoms, ref_smiles, unique_ref_fgs_atoms, target_mapped_atoms, ref_mapped_atoms)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#atom-index-bond-utilities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Atom Index &amp; Bond Utilities
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#legacy-support-constants" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Legacy &amp; Support Constants
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="accfgcompare">accfg.compare</h1>
+<p>Comparison utilities built on top of AccFG that highlight structural differences between two molecules. Includes wrappers around RDKit’s Rascal MCES implementation plus extensive helpers for handling alkane residues.</p>
+<h2 id="high-level-workflow">High-Level Workflow</h2>
+<h3 id="compare_molstarget_smiles-ref_smiles-afgaccfg-similaritythreshold07-canonicaltrue"><code>compare_mols(target_smiles, ref_smiles, afg=AccFG(), similarityThreshold=0.7, canonical=True)</code></h3>
+<p>End-to-end comparison between a target and reference molecule.</p>
+<ul>
+<li><strong>Parameters</strong></li>
+<li><code>target_smiles</code>, <code>ref_smiles</code> (<code>str</code>): Input SMILES strings.</li>
+<li><code>afg</code> (<code>accfg.main.AccFG</code>): Detector instance used to extract functional groups.</li>
+<li><code>similarityThreshold</code> (<code>float</code>): Passed to <code>get_RascalMCES</code> to control MCES sensitivity.</li>
+<li><code>canonical</code> (<code>bool</code>): Canonicalise both SMILES before further processing.</li>
+<li><strong>Returns</strong>: Tuple <code>((unique_target_fgs_atoms, target_remain_alkane), (unique_ref_fgs_atoms, ref_remain_alkane))</code>.</li>
+<li><code>unique_*_fgs_atoms</code>: <code>list[tuple[str, int, list[tuple[int, ...]]]]</code> highlighting functional groups unique to each molecule.</li>
+<li><code>*_remain_alkane</code>: Similar list describing leftover alkane fragments.</li>
+<li><strong>Behaviour</strong></li>
+<li>Compute the Rascal MCES between the two molecules.</li>
+<li>Run AccFG on both molecules and extract functional group matches.</li>
+<li>Derive groups unique to each side (<code>get_unique_fgs_with_all_atoms</code> and <code>process_unique_fgs_atoms</code>).</li>
+<li>Analyse remaining structure to classify unshared alkane fragments via <code>get_alkane_diff</code> or fallback strategies.</li>
+<li><strong>Warnings</strong>: Emits warnings when similarity is low, MCES results are empty, or when falling back to looser heuristics.</li>
+<li><strong>Usage</strong></li>
+</ul>
+<pre><code class="language-python">from accfg.compare import compare_mols
+
+target, ref = compare_mols(&quot;CCO&quot;, &quot;CC(=O)O&quot;)
+target_unique, target_alkanes = target
+</code></pre>
+<h2 id="mces-utilities">MCES Utilities</h2>
+<h3 id="get_rascalmcessmiles1-smiles2-similaritythreshold07"><code>get_RascalMCES(smiles1, smiles2, similarityThreshold=0.7)</code></h3>
+<p>Wrapper around <code>rdRascalMCES.FindMCES</code>. Accepts SMILES strings or RDKit molecules.</p>
+<ul>
+<li><strong>Parameters</strong>: Two molecules plus an optional similarity threshold (default <code>0.7</code>).</li>
+<li><strong>Returns</strong>: Rascal MCES result object (list of match records) from RDKit.</li>
+</ul>
+<h3 id="remove_atoms_from_molmol-atom_set"><code>remove_atoms_from_mol(mol, atom_set)</code></h3>
+<p>Produce a copy of a molecule with a set of atom indices removed using <code>Chem.RWMol</code>.</p>
+<ul>
+<li><strong>Parameters</strong>: <code>mol</code> (<code>rdkit.Chem.Mol</code>), <code>atom_set</code> (<code>Iterable[int]</code>).</li>
+<li><strong>Returns</strong>: New RDKit molecule with the selected atoms deleted.</li>
+</ul>
+<h3 id="get_unique_fgs_with_all_atomstarget_fgs-ref_fgs"><code>get_unique_fgs_with_all_atoms(target_fgs, ref_fgs)</code></h3>
+<p>Compute functional groups present in one molecule but not the other and track the raw atom lists.</p>
+<ul>
+<li><strong>Parameters</strong>: <code>target_fgs</code>, <code>ref_fgs</code> (dicts as returned by <code>AccFG.run</code>).</li>
+<li><strong>Returns</strong>: <code>(unique_target, unique_ref)</code> where each entry is a list of <code>(fg_name, count, atom_lists)</code>.</li>
+<li>Handles stringified dict input by calling <code>eval</code> (legacy compatibility).</li>
+</ul>
+<h3 id="process_unique_fgs_atomsunique_fgs-mapped_atoms"><code>process_unique_fgs_atoms(unique_fgs, mapped_atoms)</code></h3>
+<p>Filter atom lists so only atoms outside the MCES-mapped region remain.</p>
+<ul>
+<li><strong>Parameters</strong></li>
+<li><code>unique_fgs</code>: Output from <code>get_unique_fgs_with_all_atoms</code>.</li>
+<li><code>mapped_atoms</code> (<code>list[int]</code>): Atoms covered by the MCES match.</li>
+<li><strong>Returns</strong>: List of <code>(fg_name, count, filtered_atom_lists)</code>. Raises <code>ValueError</code> if counts disagree after filtering.</li>
+</ul>
+<h3 id="flatten_fg_diff_atomsfg_diff_atoms"><code>flatten_fg_diff_atoms(fg_diff_atoms)</code></h3>
+<p>Flatten a list of functional group atom lists into a simple one-dimensional list of atom indices.</p>
+<h2 id="alkane-fragment-helpers">Alkane Fragment Helpers</h2>
+<h3 id="get_alkane_and_atom_from_remain_molremain_mol_alkane"><code>get_alkane_and_atom_from_remain_mol(remain_mol_alkane)</code></h3>
+<p>Analyse fragments in a residual molecule to identify pure carbon chains (<code>Cn alkane</code>) based on <code>atomNote</code> properties.</p>
+<ul>
+<li><strong>Parameters</strong>: Residual molecule with <code>atomNote</code> assigned to each atom.</li>
+<li><strong>Returns</strong>: List of tuples <code>(name, count, atom_idx_tuples)</code> where <code>name</code> looks like <code>C3 alkane</code>.</li>
+</ul>
+<h3 id="project_atom_num_to_atom_notemol"><code>project_atom_num_to_atom_note(mol)</code></h3>
+<p>Copy each atom’s <code>molAtomMapNumber</code> property into <code>atomNote</code> and return the mutated molecule.</p>
+<h3 id="get_alkane_and_atom_from_remain_mol_with_remapremain_mol_alkane-original_mol_with_atom_num"><code>get_alkane_and_atom_from_remain_mol_with_remap(remain_mol_alkane, original_mol_with_atom_num)</code></h3>
+<p>Variant of <code>get_alkane_and_atom_from_remain_mol</code> that reprojects fragment atoms back onto the original molecule using atom notes from <code>original_mol_with_atom_num</code>.</p>
+<h3 id="set_atom_idxsmi-labelmolatommapnumber"><code>set_atom_idx(smi, label='molAtomMapNumber')</code></h3>
+<p>Tag atoms with their index under the provided property key. Accepts SMILES or RDKit molecule.</p>
+<h3 id="merge_alkane_synonymsfg_list"><code>merge_alkane_synonyms(fg_list)</code></h3>
+<p>Combine multiple entries referring to the same alkane label by concatenating their atom lists.</p>
+<h3 id="get_alkane_diff_splittarget_remain_mol_frags-ref_remain_mol_frags"><code>get_alkane_diff_split(target_remain_mol_frags, ref_remain_mol_frags)</code></h3>
+<p>Compare multiple residual fragments by iterating over fragment pairs and finding their MCS.</p>
+<ul>
+<li><strong>Parameters</strong>: Two sequences of RDKit fragment molecules (as produced by <code>Chem.GetMolFrags(..., asMols=True)</code>).</li>
+<li><strong>Returns</strong>: Tuple <code>(target_alkanes, ref_alkanes)</code> after merging synonyms.</li>
+</ul>
+<h3 id="get_alkane_diff_from_mol_mcstarget_remain_mol-ref_remain_mol"><code>get_alkane_diff_from_mol_MCS(target_remain_mol, ref_remain_mol)</code></h3>
+<p>Convenience wrapper when both residual molecules contain a single fragment. Performs MCES once and classifies the leftover atoms as alkanes.</p>
+<h3 id="get_alkane_diff_legacytarget_smiles-unique_target_fgs_atoms-ref_smiles-unique_ref_fgs_atoms"><code>get_alkane_diff_legacy(target_smiles, unique_target_fgs_atoms, ref_smiles, unique_ref_fgs_atoms)</code></h3>
+<p>Legacy approach that removes unique functional group atoms and then searches for remaining alkanes via MCES, with fragment splitting fallback.</p>
+<h3 id="get_alkane_diff_mcestarget_smiles-unique_target_fgs_atoms-ref_smiles-unique_ref_fgs_atoms"><code>get_alkane_diff_MCES(target_smiles, unique_target_fgs_atoms, ref_smiles, unique_ref_fgs_atoms)</code></h3>
+<p>Modern approach that removes unique functional groups (after converting to RDKit molecules with atom mapping notes) and runs MCES on the remaining structures. Falls back to fragment splitting if no MCES is found.</p>
+<h3 id="get_alkane_difftarget_smiles-unique_target_fgs_atoms-ref_smiles-unique_ref_fgs_atoms"><code>get_alkane_diff(target_smiles, unique_target_fgs_atoms, ref_smiles, unique_ref_fgs_atoms)</code></h3>
+<p>Main entry point for computing alkane differences. Handles remapping of atom notes and chooses between direct MCES, fragment splitting, or fallback heuristics.</p>
+<h3 id="get_alkane_diff_loosetarget_smiles-unique_target_fgs_atoms-ref_smiles-unique_ref_fgs_atoms-target_mapped_atoms-ref_mapped_atoms"><code>get_alkane_diff_loose(target_smiles, unique_target_fgs_atoms, ref_smiles, unique_ref_fgs_atoms, target_mapped_atoms, ref_mapped_atoms)</code></h3>
+<p>Fallback used when standard MCES approaches fail. Removes both unique FG atoms and mapped atoms, then labels the residue as alkanes directly.</p>
+<h2 id="atom-index-bond-utilities">Atom Index &amp; Bond Utilities</h2>
+<p>These helpers manipulate atom index collections during FG comparisons.</p>
+<ul>
+<li><code>get_atoms_from_diff(diff_tuple)</code>: Flatten the atom indices from a pair of FG diff lists, returning unique indices.</li>
+<li><code>get_atoms_list_from_diff(diff_tuple)</code>: Similar to above but preserves grouping.</li>
+<li><code>get_atoms_list_from_fg_list(fg_list)</code>: Convenience for extracting atom lists from <code>(fg, count, atoms)</code> structures.</li>
+<li><code>get_outer_bond_from_atoms(mol, atoms)</code>: Enumerate bonds that connect a given atom set to external atoms.</li>
+<li><code>get_outer_atoms_from_atoms(mol, atoms)</code>: Return indices of neighbouring atoms outside the provided set.</li>
+<li><code>get_atom_idx_from_atom_note(mol, atom_note_list)</code>: Map <code>atomNote</code> values back to RDKit indices.</li>
+<li><code>add_hs_from_idx(mol, idx_list)</code>: Increment explicit hydrogen counts for specific atoms.</li>
+<li><code>remove_atoms_build_bond(mol, atom_idx, outer_atoms)</code>: Remove a set of atoms and connect two outer atoms with a new single bond.</li>
+<li><code>remove_atoms_add_hs(mol, atom_idx, outer_atoms)</code>: Remove atoms and compensate neighbours by adding hydrogens.</li>
+<li><code>remove_atoms_list_from_mol(mol, atoms_list)</code>: Iteratively apply the above removal routines for multiple atom groups.</li>
+<li><code>remove_fg_list_from_mol(mol, fg_list)</code>: Remove all atoms associated with functional groups from a molecule by delegating to <code>remove_atoms_list_from_mol</code>.</li>
+<li><code>get_outer_bond_from_fg_list(mol, fg_list)</code>: Annotate functional group entries with their associated outer bonds.</li>
+</ul>
+<h2 id="legacy-support-constants">Legacy &amp; Support Constants</h2>
+<ul>
+<li><code>afg = AccFG()</code>: Module-level default detector used when callers omit an explicit instance. Reuse it for convenience but create your own if you need custom functional group definitions.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.expand", "navigation.top", "search.suggest", "search.highlight"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
